@@ -3,8 +3,9 @@ import { useState } from 'react';
 import {
   GptMessage,
   MyMessage,
-  // TextMessageBox,
-  TextMessageBoxFile,
+  TextMessageBox,
+  // TextMessageBoxFile,
+  // TextMessageBoxSelect,
   TypingLoader,
 } from '../../components';
 
@@ -19,6 +20,7 @@ export const OrthographyPage = () => {
 
   const handlePost = async (text: string) => {
     setIsLoading(true);
+    // copia el previo y coloca el/los nuevo/s
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
     // TODO: Use case
@@ -50,17 +52,25 @@ export const OrthographyPage = () => {
         </div>
       </div>
 
-      {/* <TextMessageBox
+      <TextMessageBox
         // onSendMessage={(message) => console.log('mi mensaje: ', message)}
         onSendMessage={handlePost}
         placeholder='Escribe aquí'
         disableCorrections
-      /> */}
-      <TextMessageBoxFile
+      />
+      {/* <TextMessageBoxFile
         // onSendMessage={(message) => console.log('mi mensaje: ', message)}
         onSendMessage={handlePost}
         placeholder='Escribe aquí'
-      />
+      /> */}
+      {/* <TextMessageBoxSelect
+        onSendMessage={handlePost}
+        placeholder='Escribe aquí'
+        options={[
+          { id: '1', text: 'example 1' },
+          { id: '2', text: 'example 2' },
+        ]}
+      /> */}
     </div>
   );
 };
