@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import {
   GptMessage,
+  GptOrthographyMessage,
   MyMessage,
   TextMessageBox,
   // TextMessageBoxFile,
@@ -66,7 +67,7 @@ export const OrthographyPage = () => {
 
           {messages.map((message, index) =>
             message.isGpt ? (
-              <GptMessage key={index} text='Esto es de Open AI' />
+              <GptOrthographyMessage key={index} {...message.info!} />
             ) : (
               <MyMessage key={index} text={message.text} />
             )
