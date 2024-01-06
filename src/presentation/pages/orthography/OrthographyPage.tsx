@@ -9,6 +9,8 @@ import {
   TypingLoader,
 } from '../../components';
 
+import { orthographyUseCase } from '../../../core/use-cases';
+
 interface Message {
   text: string;
   isGpt: boolean;
@@ -24,6 +26,8 @@ export const OrthographyPage = () => {
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
     // TODO: Use case
+    const data = await orthographyUseCase(text);
+    console.log('data ->', data);
     setIsLoading(false);
 
     // TODO: Añadir el mensaje de isGPT en true
