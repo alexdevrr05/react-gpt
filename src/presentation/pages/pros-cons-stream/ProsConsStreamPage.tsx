@@ -20,8 +20,33 @@ export const ProsConsStreamPage = () => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    await prosConsUseStreamCase(text);
+    const reader = await prosConsUseStreamCase(text);
     setIsLoading(false);
+
+    if (!reader) return alert('No se pudo generar el reader');
+
+    // generar el ultimo mensaje
+    const decoder = new TextDecoder();
+    let message = '';
+    setMessages((messages) => [...messages, { text: message, isGpt: true }]);
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) {
+        break;
+      }
+
+      const decodedChunk = decoder.decode(value, { stream: true });
+      message += decodedChunk;
+
+      setMessages((messages) => {
+        const newMessages = [...messages];
+        //  actualiza el ultimo mensaje
+        newMessages[newMessages.length - 1].text = message;
+
+        return newMessages;
+      });
+    }
   };
 
   return (
@@ -32,7 +57,7 @@ export const ProsConsStreamPage = () => {
 
           {messages.map((message, index) =>
             message.isGpt ? (
-              <GptMessage key={index} text='Esto es de Open AI' />
+              <GptMessage key={index} text={message.text} />
             ) : (
               <MyMessage key={index} text={message.text} />
             )
@@ -48,7 +73,6 @@ export const ProsConsStreamPage = () => {
       </div>
 
       <TextMessageBox
-        // onSendMessage={(message) => console.log('mi mensaje: ', message)}
         onSendMessage={handlePost}
         placeholder='Escribe aquí'
         disableCorrections

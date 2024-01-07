@@ -20,22 +20,7 @@ export const prosConsUseStreamCase = async (prompt: string) => {
       return null;
     }
 
-    const decoder = new TextDecoder();
-
-    let text = '';
-
-    // Ciclo infinito que termina cuando retorna 'done'
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) {
-        break;
-      }
-
-      const decodedChunk = decoder.decode(value, { stream: true });
-
-      text += decodedChunk;
-      console.log(text);
-    }
+    return reader;
   } catch (error) {
     return null;
   }
