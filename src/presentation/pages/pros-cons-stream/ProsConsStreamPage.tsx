@@ -5,7 +5,10 @@ import {
   TypingLoader,
   TextMessageBox,
 } from '../../components';
-import { prosConsUseStreamCase } from '../../../core/use-cases';
+import {
+  // prosConsUseStreamCase,
+  prosConsUseStreamGeneratorCase,
+} from '../../../core/use-cases';
 
 interface Message {
   text: string;
@@ -20,33 +23,51 @@ export const ProsConsStreamPage = () => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    const reader = await prosConsUseStreamCase(text);
+    const stream = await prosConsUseStreamGeneratorCase(text);
     setIsLoading(false);
 
-    if (!reader) return alert('No se pudo generar el reader');
+    setMessages((messages) => [...messages, { text: '', isGpt: true }]);
 
-    // generar el ultimo mensaje
-    const decoder = new TextDecoder();
-    let message = '';
-    setMessages((messages) => [...messages, { text: message, isGpt: true }]);
-
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) {
-        break;
-      }
-
-      const decodedChunk = decoder.decode(value, { stream: true });
-      message += decodedChunk;
-
+    for await (const text of stream) {
       setMessages((messages) => {
         const newMessages = [...messages];
         //  actualiza el ultimo mensaje
-        newMessages[newMessages.length - 1].text = message;
+        newMessages[newMessages.length - 1].text = text;
 
         return newMessages;
       });
     }
+
+    // TODO: USE CASE hace lo mismo que el bloque de codigo de arriba
+    // pero en el metodo de arriba es con funcion generadora propio de js
+
+    // const reader = await prosConsUseStreamCase(text);
+    // setIsLoading(false);
+
+    // if (!reader) return alert('No se pudo generar el reader');
+
+    // // generar el ultimo mensaje
+    // const decoder = new TextDecoder();
+    // let message = '';
+    // setMessages((messages) => [...messages, { text: message, isGpt: true }]);
+
+    // while (true) {
+    //   const { value, done } = await reader.read();
+    //   if (done) {
+    //     break;
+    //   }
+
+    //   const decodedChunk = decoder.decode(value, { stream: true });
+    //   message += decodedChunk;
+
+    //   setMessages((messages) => {
+    //     const newMessages = [...messages];
+    //     //  actualiza el ultimo mensaje
+    //     newMessages[newMessages.length - 1].text = message;
+
+    //     return newMessages;
+    //   });
+    // }
   };
 
   return (
