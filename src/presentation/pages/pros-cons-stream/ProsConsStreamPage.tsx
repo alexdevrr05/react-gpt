@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   GptMessage,
   MyMessage,
@@ -16,14 +16,29 @@ interface Message {
 }
 
 export const ProsConsStreamPage = () => {
+  const abortController = useRef(new AbortController());
+  const isRunning = useRef(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handlePost = async (text: string) => {
+    if (isRunning.current) {
+      // Cancela si se estaba generando el texto
+      abortController.current.abort();
+      // Evita que se cancele la generacion del texto nuevo
+      abortController.current = new AbortController();
+    }
+
     setIsLoading(true);
+    isRunning.current = true;
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    const stream = await prosConsUseStreamGeneratorCase(text);
+    // con funcion generadora
+    const stream = prosConsUseStreamGeneratorCase(
+      text,
+      abortController.current.signal
+    );
     setIsLoading(false);
 
     setMessages((messages) => [...messages, { text: '', isGpt: true }]);
@@ -38,36 +53,7 @@ export const ProsConsStreamPage = () => {
       });
     }
 
-    // TODO: USE CASE hace lo mismo que el bloque de codigo de arriba
-    // pero en el metodo de arriba es con funcion generadora propio de js
-
-    // const reader = await prosConsUseStreamCase(text);
-    // setIsLoading(false);
-
-    // if (!reader) return alert('No se pudo generar el reader');
-
-    // // generar el ultimo mensaje
-    // const decoder = new TextDecoder();
-    // let message = '';
-    // setMessages((messages) => [...messages, { text: message, isGpt: true }]);
-
-    // while (true) {
-    //   const { value, done } = await reader.read();
-    //   if (done) {
-    //     break;
-    //   }
-
-    //   const decodedChunk = decoder.decode(value, { stream: true });
-    //   message += decodedChunk;
-
-    //   setMessages((messages) => {
-    //     const newMessages = [...messages];
-    //     //  actualiza el ultimo mensaje
-    //     newMessages[newMessages.length - 1].text = message;
-
-    //     return newMessages;
-    //   });
-    // }
+    isRunning.current = false;
   };
 
   return (
