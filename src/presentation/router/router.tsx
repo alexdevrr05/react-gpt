@@ -9,7 +9,8 @@ import {
   ProsConsPage,
   ProsConsStreamPage,
   TextToAudioPage,
-  TranslatePage,
+  // TranslatePage,
+  TranslateStreamPage,
 } from '../pages';
 import { DashboardLayout } from '../layout/DashboardLayout';
 
@@ -40,7 +41,8 @@ export const menuRoutes = [
     icon: 'fa-solid fa-language',
     title: 'Traducir',
     description: 'Textos a otros idiomas',
-    component: <TranslatePage />,
+    // component: <TranslatePage />,
+    component: <TranslateStreamPage />,
   },
   {
     to: '/text-to-audio',

@@ -1,39 +1,57 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   GptMessage,
   MyMessage,
   TypingLoader,
   TextMessageBox,
 } from '../../components';
-import { translateUseCase } from '../../../core/use-cases';
+
+import { translateStreamUseCase } from '../../../core/use-cases';
 
 interface Message {
   text: string;
   isGpt: boolean;
 }
 
-export const TranslatePage = () => {
+export const TranslateStreamPage = () => {
+  const abortController = useRef(new AbortController());
+  const isRunning = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [language, setLanguage] = useState('english');
 
   const handlePost = async (text: string) => {
+    if (isRunning.current) {
+      // Cancela si se estaba generando el texto
+      abortController.current.abort();
+      // Evita que se cancele la generacion del texto nuevo
+      abortController.current = new AbortController();
+    }
+
     setIsLoading(true);
+    isRunning.current = true;
     setMessages((prev) => [...prev, { text: text, isGpt: false }]);
 
-    const { ok, message } = await translateUseCase(text, language);
-
-    if (!ok) return;
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        text: message,
-        isGpt: true,
-      },
-    ]);
-
+    // con funcion generadora
+    const stream = translateStreamUseCase(
+      text,
+      language,
+      abortController.current.signal
+    );
     setIsLoading(false);
+
+    setMessages((messages) => [...messages, { text: '', isGpt: true }]);
+
+    for await (const text of stream) {
+      setMessages((messages) => {
+        const newMessages = [...messages];
+        // actualiza el ultimo mensaje
+        newMessages[newMessages.length - 1].text = text;
+        return newMessages;
+      });
+    }
+
+    isRunning.current = false;
   };
 
   return (
