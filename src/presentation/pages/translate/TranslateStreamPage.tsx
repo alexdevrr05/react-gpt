@@ -1,12 +1,8 @@
 import { useRef, useState } from 'react';
-import {
-  GptMessage,
-  MyMessage,
-  TypingLoader,
-  TextMessageBox,
-} from '../../components';
+import { GptMessage, MyMessage, TypingLoader } from '../../components';
 
 import { translateStreamUseCase } from '../../../core/use-cases';
+import { TextMessageTranslateBox } from '../../components/chat-inputs-boxes/TextMessageTranslateBox';
 
 interface Message {
   text: string;
@@ -18,7 +14,7 @@ export const TranslateStreamPage = () => {
   const isRunning = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [language, setLanguage] = useState('english');
+  const [language, setLanguage] = useState('inglés');
 
   const handlePost = async (text: string) => {
     if (isRunning.current) {
@@ -77,10 +73,12 @@ export const TranslateStreamPage = () => {
         </div>
       </div>
 
-      <TextMessageBox
+      <TextMessageTranslateBox
         onSendMessage={handlePost}
         placeholder='Escribe aquí'
         disableCorrections
+        onLanguageChanged={setLanguage}
+        language={language}
       />
     </div>
   );
