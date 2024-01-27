@@ -7,7 +7,7 @@ export default {
         primary: '#ee008d', // pink
         secondary: '#b1b1b5', // gray
         bone: '#d4cccc',
-        black: '#21232f',
+        blackPrimary: '#21232f',
         blackSecondary: '#232530',
       },
     },
