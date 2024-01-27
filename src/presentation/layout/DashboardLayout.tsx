@@ -6,14 +6,14 @@ import { SidebarMenuItem } from '../components';
 export const DashboardLayout = () => {
   return (
     <main className='flex flex-row mt-7'>
-      <nav className='hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl'>
-        <h1 className='font-bold text-lg lg:text-3xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent'>
-          ReactGPT<span className='text-indigo-500'>.</span>
+      <nav className='hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-blackSecondary bg-opacity-10 p-5 rounded-3xl'>
+        <h1 className='font-bold text-lg lg:text-3xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-bone'>
+          AIInsightHub<span className='text-primary'>.</span>
         </h1>
-        <span className='text-xl'>Bienvenido</span>
+        <span className='text-xl text-secondary'>Bienvenido</span>
 
         {/* Divider */}
-        <div className='border-gray-70 border my-3' />
+        <div className='border-blackSecondary border my-3' />
 
         {/* Opciones del menú */}
         {menuRoutes.map((option) => (
