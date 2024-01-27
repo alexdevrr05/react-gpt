@@ -6,7 +6,7 @@ export default {
       colors: {
         primary: '#ee008d', // pink
         secondary: '#b1b1b5', // gray
-        bone: '#d4cccc',
+        bone: '#ecebeb',
         blackPrimary: '#21232f',
         blackSecondary: '#232530',
       },
