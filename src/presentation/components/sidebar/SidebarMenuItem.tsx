@@ -15,8 +15,8 @@ export const SidebarMenuItem = ({ to, icon, title, description }: Props) => {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? 'flex justify-center items-center bg-gray-800 rounder-md p-2 transition-colors'
-          : 'flex justify-center items-center hover:bg-gray-800 rounder-md p-2 transition-colors'
+          ? 'flex justify-center items-center bg-secondary bg-opacity-50 rounded p-2 transition-colors'
+          : 'flex justify-center items-center hover:bg-blackSecondary rounder-md p-2 transition-colors'
       }
     >
       <i className={`${icon} text-2xl mr-4 text-white`}></i>

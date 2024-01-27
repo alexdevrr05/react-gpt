@@ -11,7 +11,7 @@ export const GptMessage = ({ text }: Props) => {
         <div className='flex items-center justify-center h-10 w-10 rounded-full bg-primary text-bone flex-shrink-0'>
           G
         </div>
-        <div className='relative ml-3 text-sm pt-3 pb-2 px-4 rounded-xl bg-blackSecondary shadow-md border border-blackPrimary'>
+        <div className='relative ml-3 text-sm pt-3 pb-2 px-4 rounded-xl bg-secondary bg-opacity-10 shadow-md border border-blackPrimary'>
           <Markdown>{text}</Markdown>
         </div>
       </div>

@@ -25,7 +25,7 @@ export const TextMessageBox = ({
 
   return (
     <form
-      className='flex flex-row items-center h-16 rounded-xl bg-white w-full px-4'
+      className='flex flex-row items-center h-16 rounded-xl bg-secondary w-full px-4'
       onSubmit={handleSendMessage}
     >
       <div className='flex-grow'>
@@ -34,7 +34,7 @@ export const TextMessageBox = ({
             type='text'
             autoFocus
             name='message'
-            className='bg-white flex w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10'
+            className='bg-bone flex w-full border rounded-xl text-blackPrimary focus:outline-none focus:border-primary pl-4 h-10'
             placeholder={placeholder}
             autoComplete={disableCorrections ? 'on' : 'off'}
             autoCorrect={disableCorrections ? 'on' : 'off'}

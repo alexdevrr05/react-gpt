@@ -15,7 +15,7 @@ export const GptOrthographyMessage = ({
         <div className='flex items-center justify-center h-10 w-10 rounded-full bg-primary text-bone flex-shrink-0'>
           G
         </div>
-        <div className='relative ml-3 text-sm bg-blackSecondary pt-3 pb-2 px-4 shadow-md rounded-xl'>
+        <div className='relative ml-3 text-sm bg-secondary bg-opacity-10 pt-3 pb-2 px-4 shadow-md rounded-xl'>
           <h3>{userScore}%</h3>
           <p>{message}</p>
           {errors?.length === 0 ? (
