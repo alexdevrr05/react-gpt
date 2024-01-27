@@ -81,6 +81,9 @@ export const menuRoutes = [
   },
 ];
 
+// orden alfabetico
+menuRoutes.sort((a, b) => a.to.localeCompare(b.to));
+
 export const router = createBrowserRouter([
   {
     path: '/',

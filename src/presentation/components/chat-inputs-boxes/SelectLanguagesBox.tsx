@@ -26,7 +26,7 @@ export const SelectLanguagesBox = ({ onLanguageChanged, language }: Props) => {
   return (
     <>
       <select
-        className='bg-green-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-green-700 transition-all duration-200 ease-in-out'
+        className='bg-primary text-bone font-bold py-2 px-4 rounded-xl hover:opacity-80 transition-all duration-200 ease-in-out'
         disabled={false}
         name={language}
         onChange={onChange}
