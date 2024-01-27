@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { SelectLanguagesBox } from './SelectLanguagesBox';
+import { SendButton } from '..';
 
 interface Props {
   onSendMessage: (message: string) => void;
@@ -56,10 +57,7 @@ export const TextMessageTranslateBox = ({
           language={language}
         />
 
-        <button className='btn-primary'>
-          <span className='mr-2'>Enviar</span>
-          <i className='fa-regular fa-paper-plane'></i>
-        </button>
+        <SendButton />
       </div>
     </form>
   );

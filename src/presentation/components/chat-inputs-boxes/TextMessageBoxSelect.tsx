@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react';
+import { SendButton } from '..';
 
 interface Props {
   onSendMessage: (message: string, selectedOption: string) => void;
@@ -67,10 +68,7 @@ export const TextMessageBoxSelect = ({
       </div>
 
       <div className='ml-4'>
-        <button className='btn-primary'>
-          <span className='mr-2'>Enviar</span>
-          <i className='fa-regular fa-paper-plane'></i>
-        </button>
+        <SendButton />
       </div>
     </form>
   );
