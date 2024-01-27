@@ -48,7 +48,7 @@ html, body {
     @apply flex flex-col h-full overflow-x-auto mb-4 overflow-scroll;
   }
   
-  
+
   /* Animations */
   
   .fade-in { animation: fadeIn .3s; }
